@@ -1,15 +1,24 @@
 import { Component } from '@angular/core';
 
 import {  featureGroup, FeatureGroup, icon, latLng, tileLayer } from 'leaflet';
+import { CoreDemoService } from '../../../../app/core-demo.service'
+import { Geofenceinterface } from '../../../../app/geofenceinterface';
+
+
 
 @Component({
 	selector: 'leafletDrawCoreDemo',
 	templateUrl: './core-demo.component.html'
 })
 export class LeafletDrawCoreDemoComponent {
-
+	constructor(public coreDemoService: CoreDemoService){}
 	JsonData : any;
+	JsonDataNew: any;
+
+	newarray : Array<any> = new Array<any>();
+	geoFence : Geofenceinterface = {name , coordinates: null} ; 
 	ngOnInit() {
+		
 		navigator.geolocation.getCurrentPosition((position) => {
 			console.log(
 			  `lat: ${position.coords.latitude}, lon: ${position.coords.longitude}`
@@ -78,6 +87,7 @@ watchPosition() {
 		}
 	};
 
+
 	public onDrawCreated(e: any) {
 		
 		console.log('Draw Created Event!');
@@ -86,37 +96,48 @@ watchPosition() {
 		const layer = (e as any).layer;
 		const type = (e as any).layerType;
         if(type ==='polygon'){
+		
             let polygonCoordinates = layer._latlngs;
             console.log(polygonCoordinates[0]);
 			this.JsonData = polygonCoordinates[0];
-			console.log(JSON.stringify((this.JsonData)));
+			 
+			this.JsonDataNew = JSON.stringify((this.JsonData));
+		this.geofunc();
+
+
         }
-        if(type==='circle'){
-			let circleCoordinates = layer.getLatLng();
+        // if(type==='circle'){
+		// 	let circleCoordinates = layer.getLatLng();
 			
-			console.log(circleCoordinates);
-			this.JsonData = JSON.stringify(circleCoordinates);
-			console.log(this.JsonData);
-        }
+		// 	console.log(circleCoordinates);
+		// 	this.JsonData = JSON.stringify(circleCoordinates);
+		// 	console.log(this.JsonData);
+		// 	this.JsonDataNew = JSON.stringify((this.JsonData));
+        // }
         if(type==='marker'){
             let circleCoordinates = layer.getLatLng();
 			console.log(circleCoordinates);
 			this.JsonData = JSON.stringify(circleCoordinates);
 			console.log(this.JsonData);
+			this.JsonDataNew = JSON.stringify((this.JsonData));
+			this.geofunc();
         }
         if(type==='rectangle'){
             let circleCoordinates = layer._latlngs;
 			console.log(circleCoordinates[0]);
 			this.JsonData = circleCoordinates[0];
 			
-			console.log(JSON.stringify(this.JsonData));
+			//console.log(JSON.stringify(this.JsonData));
+			
+			this.geofunc();
         }
         if(type==='polyline'){
             let circleCoordinates = layer._latlngs;
 			console.log(circleCoordinates[0]);
 			this.JsonData = circleCoordinates[0];
 			
-			console.log(JSON.stringify(this.JsonData));
+	
+			this.geofunc()
 		}
 		
 		this.drawnItems.addLayer(layer);
@@ -125,6 +146,29 @@ watchPosition() {
 	public onDrawStart(e: any) {
 		// tslint:disable-next-line:no-console
 		console.log('Draw Started Event!');
+	}
+	onbuttonsubmit()
+	{
+		this.coreDemoService.saveFencing(JSON.stringify(this.geoFence));
+	}
+	geofunc()
+	{
+		this.JsonData.forEach((element: any) => {
+			
+
+			
+			this.newarray.push([element.lat,element.lng]);
+			});
+			
+			this.geoFence.name = 'abheet';
+			this.geoFence.coordinates = [...this.newarray];
+
+			console.log(this.geoFence);
+			console.log(JSON.stringify(this.geoFence));
+			
+			this.newarray.splice(0,this.newarray.length);
+			
+		
 	}
 
 }

@@ -1,6 +1,6 @@
 <div>
 
-     <div leaflet style="height: 92vh; margin: 0; padding: 0;"
+     <div leaflet style="height: 89vh; margin: 0; padding: 0;"
      leafletDraw
      [leafletOptions]="options"
      [leafletDrawOptions]="drawOptions"
@@ -11,6 +11,11 @@
      <div [leafletLayer]="drawnItems"></div>
 
      </div>
+</div>
+<div>
+     <form (submit)="onbuttonsubmit()">
+          <button>Save Geofences</button>
+     </form>
 </div>
 
 
