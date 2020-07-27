@@ -36,18 +36,19 @@ watchPosition() {
     let id = navigator.geolocation.watchPosition(
       (position) => {
 		 
-        console.log(
-          `lat: ${position.coords.latitude}, lon: ${position.coords.longitude}`
-		); 
+        // console.log(
+        //   `lat: ${position.coords.latitude}, lon: ${position.coords.longitude}`
+		// ); 
 		
-		this.againnewarray.push([`lat: ${position.coords.latitude}, lon: ${position.coords.longitude}`])
+		this.againnewarray.push(`latitude: ${position.coords.latitude}, longitude: ${position.coords.longitude}`)
 		
 
-		console.log(this.againnewarray);
+	//	console.log(this.againnewarray);
 	
-		console.log(JSON.stringify(this.againnewarray));
+	//	console.log("{"+JSON.stringify(this.againnewarray)+"}");
+		
+		this.coreDemoService.userCurrentLocation(JSON.stringify(this.againnewarray));
 		this.againnewarray.splice(0,this.againnewarray.length);
-	//	this.coreDemoService.userCurrentLocation(JSON.stringify(this.againnewarray));
         if (position.coords.latitude === desLat && position.coords.longitude === desLon) {
 		
           navigator.geolocation.clearWatch(id);

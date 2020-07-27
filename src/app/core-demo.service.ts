@@ -19,6 +19,6 @@ export class CoreDemoService {
 
   userCurrentLocation(currentLocation : any)
   {
-    console.log(currentLocation+"abcd");
+    console.log("{"+currentLocation+"}");
   }
 }
