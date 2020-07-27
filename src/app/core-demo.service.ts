@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+// import { HttpClient } from '@angular/common/http';
 
 
 
@@ -8,12 +9,16 @@ import { Injectable } from '@angular/core';
 })
 export class CoreDemoService {
 
-  constructor() {
+  // constructor(private http : HttpClient) { }
+ 
 
-   }
+  saveFencing(geofence :any){
+    console.log(geofence);
+// return this.http.post("http://localhost:5000",)
+  }
 
-  saveFencing(JsonDataNew :any){
-    console.log(JsonDataNew);
-// return this.http.post
+  userCurrentLocation(currentLocation : any)
+  {
+    console.log(currentLocation+"abcd");
   }
 }

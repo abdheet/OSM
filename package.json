@@ -78,7 +78,11 @@
 		"zone.js": "0.10"
 	},
 	"dependencies": {
+		"@angular/animations": "^10.0.5",
+		"@angular/cdk": "^10.1.0",
+		"@angular/material": "^10.1.0",
 		"@types/jest": "^26.0.7",
-		"bootstrap": "^5.0.0-alpha1"
+		"bootstrap": "^5.0.0-alpha1",
+		"hammerjs": "^2.0.8"
 	}
 }

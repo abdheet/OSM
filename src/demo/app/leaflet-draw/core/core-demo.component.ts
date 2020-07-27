@@ -17,24 +17,39 @@ export class LeafletDrawCoreDemoComponent {
 
 	newarray : Array<any> = new Array<any>();
 	geoFence : Geofenceinterface = {name , coordinates: null} ; 
+	againnewarray : Array<any> =  new Array<any>();
 	ngOnInit() {
+		if(!navigator.geolocation){
+			console.log("GeoLocation not supported")
+		}
 		
 		navigator.geolocation.getCurrentPosition((position) => {
-			console.log(
-			  `lat: ${position.coords.latitude}, lon: ${position.coords.longitude}`
-			);
+			// console.log(
+			//   `lat: ${position.coords.latitude}, long: ${position.coords.longitude}`
+			// );
 	});
 	this.watchPosition();
 }
 watchPosition() {
     let desLat = 0;
-    let desLon = 0;
+	let desLon = 0;
     let id = navigator.geolocation.watchPosition(
       (position) => {
+		 
         console.log(
           `lat: ${position.coords.latitude}, lon: ${position.coords.longitude}`
-        );
+		); 
+		
+		this.againnewarray.push([`lat: ${position.coords.latitude}, lon: ${position.coords.longitude}`])
+		
+
+		console.log(this.againnewarray);
+	
+		console.log(JSON.stringify(this.againnewarray));
+		this.againnewarray.splice(0,this.againnewarray.length);
+	//	this.coreDemoService.userCurrentLocation(JSON.stringify(this.againnewarray));
         if (position.coords.latitude === desLat && position.coords.longitude === desLon) {
+		
           navigator.geolocation.clearWatch(id);
         }
       },
@@ -144,7 +159,7 @@ watchPosition() {
 	}
 
 	public onDrawStart(e: any) {
-		// tslint:disable-next-line:no-console
+		 
 		console.log('Draw Started Event!');
 	}
 	onbuttonsubmit()
